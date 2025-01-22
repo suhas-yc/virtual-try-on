@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:virtual_try_on/checkSizePage.dart';
-import 'package:virtual_try_on/virtualTryOnPage.dart';
+import 'package:virtual_try_on/check_size_page.dart';
+import 'package:virtual_try_on/virtual_try_on_page.dart';
 
 List<CameraDescription>? cameras;
 
@@ -10,10 +10,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   cameras = await availableCameras();
-  runApp(CameraApp());
+  runApp(const CameraApp());
 }
 
 class CameraApp extends StatefulWidget {
+  const CameraApp({Key? key}) : super(key: key);
+
   @override
   _CameraAppState createState() => _CameraAppState();
 }
@@ -53,36 +55,36 @@ class _CameraAppState extends State<CameraApp> {
         // primarySwatch: Colors.grey,
         // fontFamily: 'Poppins',
         fontFamily: 'Inter',
-        primaryColor: Color(0xFF001E1D),
-        canvasColor: Color(0xFFE9E4E5),
-        appBarTheme: AppBarTheme(
+        primaryColor: const Color(0xFF001E1D),
+        canvasColor: const Color(0xFFE9E4E5),
+        appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF001E1D),
         ),
-        buttonTheme: ButtonThemeData(
+        buttonTheme: const ButtonThemeData(
           buttonColor: Color(0xFF001E1D),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all<Color>(Color(0xFF001E1D)),
-            fixedSize: MaterialStateProperty.all<Size>(Size(200, 70)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                WidgetStateProperty.all<Color>(const Color(0xFF001E1D)),
+            fixedSize: WidgetStateProperty.all<Size>(const Size(200, 70)),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50))),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            side: MaterialStateProperty.all<BorderSide>(BorderSide(
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+            side: WidgetStateProperty.all<BorderSide>(const BorderSide(
               width: 1,
               // color: Color(0xFF001E1D),
               color: Colors.transparent,
             )),
             foregroundColor:
-                MaterialStateProperty.all<Color>(Color(0xFF001E1D)),
-            fixedSize: MaterialStateProperty.all<Size>(Size(200, 70)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                WidgetStateProperty.all<Color>(const Color(0xFF001E1D)),
+            fixedSize: WidgetStateProperty.all<Size>(const Size(200, 70)),
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
               ),
@@ -90,7 +92,7 @@ class _CameraAppState extends State<CameraApp> {
           ),
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: Color(0xFFD96566),
+          secondary: const Color(0xFFD96566),
         ),
       ),
       // home: MyHomePage(title: 'Virtual try on', controller: controller),
@@ -109,7 +111,7 @@ class _CameraAppState extends State<CameraApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({
+  const MyHomePage({
     Key? key,
     required this.title,
     required this.controller,
@@ -117,19 +119,19 @@ class MyHomePage extends StatefulWidget {
   }) : super(key: key);
 
   final String title;
-  CameraController? controller;
-  Future<void> initializeControllerFuture;
+  final CameraController? controller;
+  final Future<void> initializeControllerFuture;
 
   @override
   State<MyHomePage> createState() =>
+      // ignore: no_logic_in_create_state
       _MyHomePageState(controller, initializeControllerFuture);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   CameraController? controller;
   Future<void> initializeControllerFuture;
-  _MyHomePageState(CameraController? this.controller,
-      Future<void> this.initializeControllerFuture);
+  _MyHomePageState(this.controller, this.initializeControllerFuture);
 
   @override
   Widget build(BuildContext context) {
@@ -148,13 +150,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: RichText(
                           text: TextSpan(
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 60,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                         ),
                         children: <TextSpan>[
-                          TextSpan(text: 'A new and improved '),
+                          const TextSpan(text: 'A new and improved '),
                           TextSpan(
                             text: 'shopping ',
                             style: TextStyle(
@@ -162,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                           ),
-                          TextSpan(text: 'experience.'),
+                          const TextSpan(text: 'experience.'),
                         ],
                       ))
                       // child: Text(
@@ -196,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: const Text("Check size"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(

@@ -1,13 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:virtual_try_on/checkSizePage.dart';
-import 'package:virtual_try_on/formPage.dart';
-import 'package:virtual_try_on/thankYouPage.dart';
+import 'package:virtual_try_on/check_size_page.dart';
+import 'package:virtual_try_on/thank_you_page.dart';
 
 class SubmitPage extends StatelessWidget {
-  CameraController? controller;
-  Future<void> initializeControllerFuture;
-  SubmitPage({
+  final CameraController? controller;
+  final Future<void> initializeControllerFuture;
+  const SubmitPage({
     Key? key,
     required this.controller,
     required this.initializeControllerFuture,
@@ -16,7 +15,7 @@ class SubmitPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Submit page'), actions: [
+      appBar: AppBar(title: const Text('Submit page'), actions: [
         TextButton(
           onPressed: () {
             Navigator.push(
@@ -27,9 +26,9 @@ class SubmitPage extends StatelessWidget {
                       initializeControllerFuture: initializeControllerFuture)),
             );
           },
-          child: Text('Check size'),
+          child: const Text('Check size'),
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
           ),
         )
       ]),
@@ -38,7 +37,7 @@ class SubmitPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
+            const Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -84,12 +83,12 @@ class SubmitPage extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-                child: Text('Place order'),
+                child: const Text('Place order'),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ThankYouPage(survey: true)),
+                        builder: (context) => const ThankYouPage(survey: true)),
                   );
                 }),
           ],

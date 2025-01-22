@@ -2,16 +2,16 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'dart:convert';
 // import 'package:dio/dio.dart';
-
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:http_parser/http_parser.dart';
 
 class CheckSizePage extends StatelessWidget {
-  CameraController? controller;
-  Future<void> initializeControllerFuture;
-  CheckSizePage(
+  final CameraController? controller;
+  final Future<void> initializeControllerFuture;
+  const CheckSizePage(
       {Key? key,
       required this.controller,
       required this.initializeControllerFuture})
@@ -26,9 +26,9 @@ class CheckSizePage extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Guide to using the module'),
-            content: SingleChildScrollView(
+            content: const SingleChildScrollView(
               child: ListBody(
-                children: const <Widget>[
+                children: <Widget>[
                   Text('Step 1:',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   Text('Place an A4 size paper on the floor.'),
@@ -65,11 +65,11 @@ class CheckSizePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Get your foot size'),
+        title: const Text('Get your foot size'),
         actions: [
           Center(
             child: TextButton(
-              child: Text(
+              child: const Text(
                 'Help',
                 style: TextStyle(
                   color: Colors.white,
@@ -78,7 +78,7 @@ class CheckSizePage extends StatelessWidget {
               onPressed: _showMyDialog,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20,
           )
         ],
@@ -117,7 +117,7 @@ class CheckSizePage extends StatelessWidget {
             );
           } catch (e) {
             // If an error occurs, log the error to the console.
-            print(e);
+            developer.log('e');
           }
         },
         child: const Icon(Icons.camera_alt),
@@ -140,7 +140,7 @@ class DisplayPictureScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Display the Picture')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
         child: Image.file(
           File(imagePath),
@@ -180,11 +180,13 @@ class DisplayPictureScreen extends StatelessWidget {
 }
 
 class DisplaySizeScreen extends StatefulWidget {
-  late String imagePath;
-  DisplaySizeScreen({Key? key, required this.imagePath}) : super(key: key);
+  final String imagePath;
+  const DisplaySizeScreen({Key? key, required this.imagePath})
+      : super(key: key);
 
   @override
   State<DisplaySizeScreen> createState() =>
+      // ignore: no_logic_in_create_state
       _DisplaySizeScreenState(imagePath: imagePath);
 }
 
@@ -192,7 +194,7 @@ class _DisplaySizeScreenState extends State<DisplaySizeScreen> {
   late String imagePath;
   bool loading = true;
   String res = '';
-  double size_cm = -1;
+  double sizeCm = -1;
   _DisplaySizeScreenState({required this.imagePath});
 
   Future<String> getEncoding() async {
@@ -201,7 +203,7 @@ class _DisplaySizeScreenState extends State<DisplaySizeScreen> {
     return img64;
   }
 
-  send_request() async {
+  sendRequest() async {
     MultipartRequest request = MultipartRequest(
         'POST', Uri.parse('http://aadilkhalifa.pythonanywhere.com/image'));
 
@@ -214,9 +216,8 @@ class _DisplaySizeScreenState extends State<DisplaySizeScreen> {
     );
 
     StreamedResponse r = await request.send();
-    print(r.statusCode);
-    size_cm = double.parse(await r.stream.transform(utf8.decoder).join());
-    print(size_cm);
+    developer.log('Your log message here');
+    sizeCm = double.parse(await r.stream.transform(utf8.decoder).join());
     setState(() {});
   }
 
@@ -246,7 +247,7 @@ class _DisplaySizeScreenState extends State<DisplaySizeScreen> {
         //   print(e);
         // }
 
-        await send_request();
+        await sendRequest();
 
         // print(img);
         loading = false;
@@ -315,10 +316,10 @@ class _DisplaySizeScreenState extends State<DisplaySizeScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Calculated foot size')),
+      appBar: AppBar(title: const Text('Calculated foot size')),
       body: Center(
         child: loading
-            ? CircularProgressIndicator()
+            ? const CircularProgressIndicator()
             : Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -326,11 +327,11 @@ class _DisplaySizeScreenState extends State<DisplaySizeScreen> {
                   children: [
                     Text(
                       res,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    DataTable(columns: <DataColumn>[
+                    DataTable(columns: const <DataColumn>[
                       DataColumn(
                         label: Text(
                           'Unit',
@@ -346,32 +347,32 @@ class _DisplaySizeScreenState extends State<DisplaySizeScreen> {
                     ], rows: <DataRow>[
                       DataRow(
                         cells: <DataCell>[
-                          DataCell(Text('US')),
-                          DataCell(Text(getUS(size_cm).toString())),
+                          const DataCell(Text('US')),
+                          DataCell(Text(getUS(sizeCm).toString())),
                         ],
                       ),
                       DataRow(
                         cells: <DataCell>[
-                          DataCell(Text('EURO')),
-                          DataCell(Text(getEURO(size_cm).toString())),
+                          const DataCell(Text('EURO')),
+                          DataCell(Text(getEURO(sizeCm).toString())),
                         ],
                       ),
                       DataRow(
                         cells: <DataCell>[
-                          DataCell(Text('UK')),
-                          DataCell(Text(getUK(size_cm).toString())),
+                          const DataCell(Text('UK')),
+                          DataCell(Text(getUK(sizeCm).toString())),
                         ],
                       ),
                       DataRow(
                         cells: <DataCell>[
-                          DataCell(Text('cm')),
-                          DataCell(Text(size_cm.toStringAsFixed(2).toString())),
+                          const DataCell(Text('cm')),
+                          DataCell(Text(sizeCm.toStringAsFixed(2).toString())),
                         ],
                       ),
                     ]),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     ElevatedButton(
-                      child: Text(
+                      child: const Text(
                         'Done',
                       ),
                       onPressed: () {

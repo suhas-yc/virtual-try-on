@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
-import 'package:virtual_try_on/submitPage.dart';
+import 'package:virtual_try_on/submit_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'formPage.dart';
-
 class VirtualTryOnPage extends StatefulWidget {
-  CameraController? controller;
-  Future<void> initializeControllerFuture;
-  VirtualTryOnPage({
+  final CameraController? controller;
+  final Future<void> initializeControllerFuture;
+  const VirtualTryOnPage({
     Key? key,
     required this.controller,
     required this.initializeControllerFuture,
@@ -22,7 +20,7 @@ class VirtualTryOnPage extends StatefulWidget {
 class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
   var selected = 1;
 
-  final snapchat_urls = [
+  final snapchatUrls = [
     'https://lens.snapchat.com/4394187f0b4c428c913656befdfcc633?share_id=BBCCa9fseJ4&locale=en-GB',
     'https://lens.snapchat.com/5f8ef5e0aae94cb08593385483380143?share_id=0A-hipzMDi0&locale=en-GB',
     'https://lens.snapchat.com/35bc001ea386442ea1b7954527950c8e?share_id=N7eWayFqB1c&locale=en-GB',
@@ -37,9 +35,9 @@ class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Guide to using the module'),
-            content: SingleChildScrollView(
+            content: const SingleChildScrollView(
               child: ListBody(
-                children: const <Widget>[
+                children: <Widget>[
                   Text('Step 1:',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   Text(
@@ -72,13 +70,13 @@ class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Virtual try on'),
+        title: const Text('Virtual try on'),
         actions: [
           Center(
             child: Row(
               children: [
                 TextButton(
-                  child: Text(
+                  child: const Text(
                     'Help',
                     style: TextStyle(
                       color: Colors.white,
@@ -87,7 +85,7 @@ class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
                   onPressed: _showMyDialog,
                 ),
                 TextButton(
-                  child: Text(
+                  child: const Text(
                     'Proceed',
                     style: TextStyle(
                       color: Colors.white,
@@ -108,7 +106,7 @@ class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20,
           )
         ],
@@ -129,11 +127,11 @@ class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
                 Image(
                     image: AssetImage(
                         'assets/shoe' + (selected).toString() + '.png')),
-                SizedBox(height: 32.0),
+                const SizedBox(height: 32.0),
                 OutlinedButton(
-                  child: Text('Try AR filter'),
+                  child: const Text('Try AR filter'),
                   onPressed: () {
-                    _launchURL(snapchat_urls[selected - 1]);
+                    _launchURL(snapchatUrls[selected - 1]);
                   },
                 ),
               ],
@@ -141,7 +139,7 @@ class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
+            child: SizedBox(
               height: 120.0,
               // color: Colors.red,
               child: ListView(
@@ -172,14 +170,6 @@ class _VirtualTryOnPageState extends State<VirtualTryOnPage> {
                                     (index + 1).toString() +
                                     '.png'))),
                       ),
-                    ),
-                  );
-                  return Card(
-                    // color: Colors.blue[index * 100],
-                    child: Container(
-                      width: 100.0,
-                      height: 100.0,
-                      child: Center(child: Text("Shoe ${index + 1}")),
                     ),
                   );
                 }),
